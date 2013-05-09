@@ -17,7 +17,7 @@ d88888b d888888b d88888b d888888b db   db  d888b  d88888b  .d8b.  d8888b.   d888
 88        .88.   88         88    88   88 88. ~8~ 88.     88   88 88 `88.   88      88   88 88      
 YP      Y888888P YP         YP    YP   YP  Y888P  Y88888P YP   YP 88   YD   88      YP   YP 88      
  
-Connect your application to the Fifth Gear Fullfillment Engine   
+Connect your application to Fifth Gear's fulfillment engine   
 Learn more at http://infifthgear.com/                                                                                               
                                                                                                                                                                       
 */                              
