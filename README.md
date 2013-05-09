@@ -1,6 +1,10 @@
 Fifth Gear Integration with PHP
 =======================
-Fifth Gear is an On-demand fulfillment solution for direct retailers in the eCommerce and catalog space focused on growing their business, not on buying software. **FIFTHGEAR-PHP** is a Class for interacting with our fulfillment Engine including: Order Placing, Order Tracking and Inventory lookup.
+Fifth Gear is an On-demand fulfillment solutions provider for direct retailers in the eCommerce and catalog space. **FIFTHGEAR-PHP** is a Class for interacting with our fulfillment Engine including: Order Placing, Order Tracking and Inventory lookup.
+
+**Requirements**
+- PHP 5.*
+- [PHP Curl](http://php.net/manual/en/curl.installation.php)
 
 Learn more about [Fifth Gear & our order fulfillment services](http://infifthgear.com/ "Order fulfillment").
 
