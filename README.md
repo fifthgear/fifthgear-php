@@ -35,11 +35,11 @@ With FifthGear's Inventory API, you can access real-time inventory data for your
         service: "ItemInventoryLookup"
     }
 
-**Note:** SKU's that are not present in SigmaCommerce will throw an error. We're unable to provide any inventory data on a product that's not in SigmaCommerce.
+**Note:** SKU's that are not present in Fifth Gear will throw an error. We're unable to provide any inventory data on a product that's not in Fifth Gear.
 
 ## Placing an Order 
 
-Use the SigmaCommerce Order Submit API to send new orders from any application directly in to SigmaCommerce's Warehouse Management Platform.
+Use the Fifth Gear Order Submit API to send new orders from any application directly in to Fifth Gear's Warehouse Management Platform.
         
     require_once('scapi.php');
     $sc = new SigmaCommerce('companyid', 'username', 'password');
