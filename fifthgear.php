@@ -24,18 +24,20 @@ Learn more at http://infifthgear.com/
 
 	class FifthGear {
 	
-		 public $orderData = array();
-		 public $inventoryData = array();
-		 public $trackingData = array();
+		public $orderData = array();
+		public $inventoryData = array();
+		public $trackingData = array();
 
-		 /// Config container for company, username, password, and host
-		 public $config = array(
-							 'company' 	=> null,	
-							 'user' 	=> null,
-							 'password' => null,
-							 'basepath'	=>'/test/v2.0/CommerceServices.svc',
-							 'host' 	=> 'commerceservices.infifthgear.com'
-						 );
+		/// Config container for company, username, password, and host
+		/// Unsure of your credentials or the base path?? Email prodsup 
+		public $config = array(
+			 'company' 	=> null,	
+			 'user' 	=> null,
+			 'password' => null,
+			 'basepath'	=>'/test/v2.0/CommerceServices.svc',
+			 'host' 	=> 'commerceservices.infifthgear.com'
+		);
+
 		/**
 		* Contstruct the FifthGear Object
 		*
