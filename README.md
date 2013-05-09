@@ -1,10 +1,10 @@
-SigmaCommerce Integration with PHP
+Fifth Gear Integration with PHP
 =======================
-SigmaCommerce is an On-demand fulfillment solution for direct retailers in the eCommerce and catalog space focused on growing their business, not on buying software. **PHP-SCAPI** is a PHP Class for interacting with our Fullfilment Engine including: Order Placing, Order Tracking and Inventory lookup.
+Fifth Gear is an On-demand fulfillment solution for direct retailers in the eCommerce and catalog space focused on growing their business, not on buying software. **FIFTHGEAR-PHP** is a Class for interacting with our Fullfilment Engine including: Order Placing, Order Tracking and Inventory lookup.
 
 ##Inventory Lookup
 
-With SigmaCommerce's Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. 
+With FifthGear's Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. 
 
 **Data Available**
 
