@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>FifthGear PHP: Fifth Gear Integration with PHP</title>
+<title>FifthGear PHP: /Users/brandon/Dropbox/FifthGear/SCAPI-2013/fifthgear-php Directory Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
       <li><a href="annotated.html"><span>Data&#160;Structures</span></a></li>
       <li><a href="files.html"><span>Files</span></a></li>
@@ -75,105 +75,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_7eb09e58583f359e753ec9733cdd3f32.html">Dropbox</a></li><li class="navelem"><a class="el" href="dir_f35ff8d8ae26151b6934799e31f09f9c.html">FifthGear</a></li><li class="navelem"><a class="el" href="dir_85cde0a5eaf96f05eea058e127df2f88.html">SCAPI-2013</a></li><li class="navelem"><a class="el" href="dir_bd4ceabf9a098ac1b333b002f2ac7295.html">fifthgear-php</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle">
-<div class="title">Fifth Gear Integration with PHP </div>  </div>
+<div class="title">fifthgear-php Directory Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>Fifth Gear is an On-demand fulfillment solution for direct retailers in the eCommerce and catalog space focused on growing their business, not on buying software. <b>FIFTHGEAR-PHP</b> is a Class for interacting with our Fullfilment Engine including: Order Placing, Order Tracking and Inventory lookup.</p>
-<h2>Inventory Lookup</h2>
-<p>With <a class="el" href="class_fifth_gear.html">FifthGear</a>'s Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale.</p>
-<p><b>Data Available</b></p>
-<ul>
-<li>Quantity available for purchase</li>
-<li>Availability Date of Backorders</li>
-<li>Item Status</li>
-</ul>
-<p><b>Executing an Inventory Lookup</b> </p>
-<pre class="fragment">require_once('scapi.php');
-$sc = new SigmaCommerce('companyid', 'username', 'password');
-
-$sku = "CT3";
-$results = $sc-&gt;lookupInventory($sku);
-echo json_encode($results);
-</pre><p><b>Successful Response</b> </p>
-<pre class="fragment">{
-    success: true
-    results: {
-        AvailableToPurchaseQuantity: 15
-        BackOrderAvailableDate: "05/02/2013"
-        ItemNumber: "CT-361"
-        Status: 0
-    },
-    errors: null
-    service: "ItemInventoryLookup"
-}
-</pre><p><b>Note:</b> SKU's that are not present in Fifth Gear will throw an error. We're unable to provide any inventory data on a product that's not in Fifth Gear.</p>
-<h2>Placing an Order</h2>
-<p>Use the Fifth Gear Order Submit API to send new orders from any application directly in to Fifth Gear's Warehouse Management Platform. </p>
-<pre class="fragment">require_once('scapi.php');
-$sc = new SigmaCommerce('companyid', 'username', 'password');
-
-$sc-&gt;addCustomer(array(
-    'firstName'=&gt;'Brandon',
-    'lastName'=&gt;'McSmith',
-    'email'=&gt;'email@address.com'
-));
-
-$sc-&gt;setOrderId('12345');
-
-$sc-&gt;addAddress('both', array(
-    'address'=&gt;'123456 Pine View Dr',
-    'address2'=&gt;'Suite 123',
-    'postal'=&gt;46032,
-    'city'=&gt;'Carmel',
-    'state'=&gt;'IN',
-    'country'=&gt;'USA',
-    'firstName'=&gt;'Brandon',
-    'lastName'=&gt;'McSmith'
-));
-
-$sc-&gt;addItem(array(
-    'amount' =&gt; 1000,
-    'sku' =&gt; 'CT-103',
-    'qty' =&gt; 1
-));
-$sc-&gt;addItem(array(
-    'amount' =&gt; 1000,
-    'sku' =&gt; 'CT-133',
-    'qty' =&gt; 4
-));
-
-$sc-&gt;addPayment(array(
-    'number' =&gt; '4111111111111111',
-    'nameOnCard' =&gt; 'Brandon McSmith',
-    'cvv' =&gt; '123',
-    'month' =&gt; '03',
-    'year' =&gt; '2044'
-));
-
-$results = $sc-&gt;placeOrder();
-</pre><p><b>Cart Submit Response</b></p>
-<p>{ "success": true, "results": { "OrderReceipt": "4d341e8b-f425-499a-a9a4-79f800d8c0d7", "OrderStatus": "NotYetShipped", "OrderReferenceNumber": "ord-7HG9IB32F", "OrderStatusMessage": "Not Yet Shipped" }, "errors": null, "service": "CartSubmit" }</p>
-<p><b>NOTES for Order Placing</b></p>
-<ul>
-<li>States provided must be in the 2 Digit Format. e.g. IN, OH, CA, MA<ul>
-<li>A collection of all state codes can be found with the object <b>sc.stateCodes</b></li>
-</ul>
-</li>
-<li>Country provided must be in their 3 Digit Format. e.g. USA, CAN, ALA</li>
-<li>A collection of all country codes can be found with the object <b>sc.countryCodes</b></li>
-<li>sc.stateCodes and sc.countryCodes can be</li>
-</ul>
-<h2>Track Order</h2>
-<p>Track the status of an order, retrieve tracking information and more. </p>
-<pre class="fragment">require_once('scapi.php');
-$sc = new SigmaCommerce('companyid', 'username', 'password');
-
-$orderid = "12345";
-$results = $sc-&gt;trackOrder($orderid);
-echo json_encode($results);</pre> </div></div><!-- contents -->
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="files"></a>
+Files</h2></td></tr>
+<tr class="memitem:examples_8php"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="examples_8php.html">examples.php</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:fifthgear_8php"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="fifthgear_8php.html">fifthgear.php</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Thu May 9 2013 10:13:28 for FifthGear PHP by &#160;<a href="http://www.doxygen.org/index.html">
