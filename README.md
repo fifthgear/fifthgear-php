@@ -3,6 +3,7 @@ Fifth Gear Integration with PHP
 Fifth Gear is an On-demand fulfillment solutions provider for direct retailers in the eCommerce and catalog space. **FIFTHGEAR-PHP** is a php class for interacting with our fulfillment engine. Currently  supports: Order Placing, Order Tracking and Inventory lookup.
 
 **Requirements**
+
 - PHP 5.*
 - [PHP Curl](http://php.net/manual/en/curl.installation.php)
 
@@ -20,7 +21,7 @@ With Fifth Gear's Inventory API, you can access real-time inventory data for you
 
 **Executing an Inventory Lookup**
     
-    require_once('scapi.php');
+    require_once('fifthgear.php');
     $sc = new SigmaCommerce('companyid', 'username', 'password');
 
     $sku = "CT3";
@@ -47,7 +48,7 @@ With Fifth Gear's Inventory API, you can access real-time inventory data for you
 
 Use the Fifth Gear Order Submit API to send new orders from any application directly in to Fifth Gear's Warehouse Management Platform.
         
-    require_once('scapi.php');
+    require_once('fifthgear.php');
     $sc = new SigmaCommerce('companyid', 'username', 'password');
 
     $sc->addCustomer(array(
@@ -116,7 +117,7 @@ Use the Fifth Gear Order Submit API to send new orders from any application dire
 
 Track the status of an order, retrieve tracking information and more.
 
-    require_once('scapi.php');
+    require_once('fifthgear.php');
     $sc = new SigmaCommerce('companyid', 'username', 'password');
 
     $orderid = "12345";
