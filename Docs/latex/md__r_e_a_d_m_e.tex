@@ -1,0 +1,113 @@
+Sigma\-Commerce is an On-\/demand fulfillment solution for direct retailers in the e\-Commerce and catalog space focused on growing their business, not on buying software. {\bfseries P\-H\-P-\/\-S\-C\-A\-P\-I} is a P\-H\-P Class for interacting with our Fullfilment Engine including\-: Order Placing, Order Tracking and Inventory lookup.
+
+\subsection*{Inventory Lookup}
+
+With Sigma\-Commerce's Inventory A\-P\-I, you can access real-\/time inventory data for your entire organization including warehouses, call center, and point of sale.
+
+{\bfseries Data Available}
+
+
+\begin{DoxyItemize}
+\item Quantity available for purchase
+\item Availability Date of Backorders
+\item Item Status
+\end{DoxyItemize}
+
+{\bfseries Executing an Inventory Lookup} \begin{DoxyVerb}require_once('scapi.php');
+$sc = new SigmaCommerce('companyid', 'username', 'password');
+
+$sku = "CT3";
+$results = $sc->lookupInventory($sku);
+echo json_encode($results);
+\end{DoxyVerb}
+
+
+{\bfseries Successful Response} \begin{DoxyVerb}{
+    success: true
+    results: {
+        AvailableToPurchaseQuantity: 15
+        BackOrderAvailableDate: "05/02/2013"
+        ItemNumber: "CT-361"
+        Status: 0
+    },
+    errors: null
+    service: "ItemInventoryLookup"
+}
+\end{DoxyVerb}
+
+
+{\bfseries Note\-:} S\-K\-U's that are not present in Sigma\-Commerce will throw an error. We're unable to provide any inventory data on a product that's not in Sigma\-Commerce.
+
+\subsection*{Placing an Order}
+
+Use the Sigma\-Commerce Order Submit A\-P\-I to send new orders from any application directly in to Sigma\-Commerce's Warehouse Management Platform. \begin{DoxyVerb}require_once('scapi.php');
+$sc = new SigmaCommerce('companyid', 'username', 'password');
+
+$sc->addCustomer(array(
+    'firstName'=>'Brandon',
+    'lastName'=>'McSmith',
+    'email'=>'email@address.com'
+));
+
+$sc->setOrderId('12345');
+
+$sc->addAddress('both', array(
+    'address'=>'123456 Pine View Dr',
+    'address2'=>'Suite 123',
+    'postal'=>46032,
+    'city'=>'Carmel',
+    'state'=>'IN',
+    'country'=>'USA',
+    'firstName'=>'Brandon',
+    'lastName'=>'McSmith'
+));
+
+$sc->addItem(array(
+    'amount' => 1000,
+    'sku' => 'CT-103',
+    'qty' => 1
+));
+$sc->addItem(array(
+    'amount' => 1000,
+    'sku' => 'CT-133',
+    'qty' => 4
+));
+
+$sc->addPayment(array(
+    'number' => '4111111111111111',
+    'nameOnCard' => 'Brandon McSmith',
+    'cvv' => '123',
+    'month' => '03',
+    'year' => '2044'
+));
+
+$results = $sc->placeOrder();
+\end{DoxyVerb}
+
+
+{\bfseries Cart Submit Response}
+
+\{ \char`\"{}success\char`\"{}\-: true, \char`\"{}results\char`\"{}\-: \{ \char`\"{}\-Order\-Receipt\char`\"{}\-: \char`\"{}4d341e8b-\/f425-\/499a-\/a9a4-\/79f800d8c0d7\char`\"{}, \char`\"{}\-Order\-Status\char`\"{}\-: \char`\"{}\-Not\-Yet\-Shipped\char`\"{}, \char`\"{}\-Order\-Reference\-Number\char`\"{}\-: \char`\"{}ord-\/7\-H\-G9\-I\-B32\-F\char`\"{}, \char`\"{}\-Order\-Status\-Message\char`\"{}\-: \char`\"{}\-Not Yet Shipped\char`\"{} \}, \char`\"{}errors\char`\"{}\-: null, \char`\"{}service\char`\"{}\-: \char`\"{}\-Cart\-Submit\char`\"{} \}
+
+{\bfseries N\-O\-T\-E\-S for Order Placing}
+
+
+\begin{DoxyItemize}
+\item States provided must be in the 2 Digit Format. e.\-g. I\-N, O\-H, C\-A, M\-A
+\begin{DoxyItemize}
+\item A collection of all state codes can be found with the object {\bfseries sc.\-state\-Codes}
+\end{DoxyItemize}
+\item Country provided must be in their 3 Digit Format. e.\-g. U\-S\-A, C\-A\-N, A\-L\-A
+\item A collection of all country codes can be found with the object {\bfseries sc.\-country\-Codes}
+\item sc.\-state\-Codes and sc.\-country\-Codes can be
+\end{DoxyItemize}
+
+\subsection*{Track Order}
+
+Track the status of an order, retrieve tracking information and more. \begin{DoxyVerb}require_once('scapi.php');
+$sc = new SigmaCommerce('companyid', 'username', 'password');
+
+$orderid = "12345";
+$results = $sc->trackOrder($orderid);
+echo json_encode($results);\end{DoxyVerb}
+ 
