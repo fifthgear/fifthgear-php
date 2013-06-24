@@ -66,34 +66,35 @@ With Fifth Gear's Bulk Inventory API you can access real-time inventory data for
 
 **Successful Response**
 
-    {
+   {
       "success": true,
       "results": {
         "ItemInventories": [
           {
             "AvailableToPurchaseQuantity": 162,
-            "ItemNumber": "10001",
-            "TotalSKUResult": 35105
+            "ExternalItemNumber": null,
+            "ItemNumber": "10001"
           },
           {
             "AvailableToPurchaseQuantity": 0,
-            "ItemNumber": "10002",
-            "TotalSKUResult": 35105
+            "ExternalItemNumber": null,
+            "ItemNumber": "10002"
           },
           {
             "AvailableToPurchaseQuantity": 0,
-            "ItemNumber": "10003",
-            "TotalSKUResult": 35105
+            "ExternalItemNumber": null,
+            "ItemNumber": "10003"
           }
-        ]
+        ],
+        "TotalSKUResults": 35105
       },
       "request": {
-        "time": 2683,
+        "time": 3601,
         "args": null
       },
       "errors": null,
       "service": "ItemInventoryBulkLookup"
- }
+    }
 
 
 ## Placing an Order 

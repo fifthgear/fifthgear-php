@@ -1,6 +1,7 @@
 <?
 
 require_once('fifthgear.php');
+
 $fg = new FifthGear('companyid', 'user', 'password');
 
 $results = null;
