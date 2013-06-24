@@ -158,6 +158,8 @@ Learn more at http://infifthgear.com/
 			
 			$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
 
+
+
 			// Curl Options
 			curl_setopt($curl, CURLOPT_URL, $callURL);
 			curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
@@ -187,6 +189,22 @@ Learn more at http://infifthgear.com/
 
 		}
 
+
+		/***************************************
+		
+		itemInventoryBulkLookup
+
+		companyId
+		startRange = 0
+		endRange = 100
+
+		- availabletopromise
+		- itemnumber
+		- totalSKUResults ()
+			
+		***************************************/
+
+
 		/**
 		* Get the current Inventory levels for a sku in the FifthGear Warehouse
 		* 
@@ -202,6 +220,26 @@ Learn more at http://infifthgear.com/
 			return $this->call('ItemInventoryLookup', $data);
 
 		}
+
+		/**
+		* Get the current Inventory levels for a ALL sku in the FifthGear Warehouse
+		* 
+		* @param integer $start number of items to start at. 
+		* @param integer $end number of items to stop at (max 5000 results per request)
+		* @return object FifthGearResponse
+		*/
+		public function lookupInventoryBulk($start=1,$end=5000) {
+
+			$data = (object) "ItemInventoryBulkLookup";
+			$data->CompanyId = $this->config['company'];
+			$data->startRange=$start;
+			$data->endRange = $end;
+
+			return $this->call('ItemInventoryBulkLookup', $data);
+
+		}
+
+		
 
 		/**
 		* Add a Customer to an Order
@@ -342,10 +380,10 @@ Learn more at http://infifthgear.com/
 		* @return object
 		*/
 		public function addPayment($params=array('number'=>null, 'cvv'=>null,'nameOnCard'=>null, 'month'=>null, 'year'=>null)) {
-			$number = (array_key_exists('number', $params)) ? $params['number'] : null;
-			$cvv = (array_key_exists('cvv', $data)) ? $params['cvv'] : null;
-			$month = (array_key_exists('month', $params)) ? $params['month'] : null;
-			$year = (array_key_exists('year', $params)) ? $params['year'] : null;
+			$number 	= (array_key_exists('number', $params)) ? $params['number'] : null;
+			$cvv 		= (array_key_exists('cvv', $data)) ? $params['cvv'] : null;
+			$month 		= (array_key_exists('month', $params)) ? $params['month'] : null;
+			$year 		= (array_key_exists('year', $params)) ? $params['year'] : null;
 			$nameOnCard = (array_key_exists('nameOnCard', $params)) ? $params['nameOnCard'] : null;
 
 			$this->order->data->Request->Payment->CreditCardPayments[0]->CVV 				= $cvv;

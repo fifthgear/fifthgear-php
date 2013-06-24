@@ -1,11 +1,16 @@
 <?
 
 require_once('fifthgear.php');
-$fg = new FifthGear('companyid', 'username', 'password');
+$fg = new FifthGear('companyid', 'user', 'password');
 
 $results = null;
 
-$testService = "inventory";
+/***************************************
+Uncomment the service you'd like to test below
+***************************************/
+
+//$testService = "invenotry";
+$testService = "bulkinventory";
 //$testService = "placeorder";
 //$testService = "trackorder";
 //$testService = "codes";
@@ -27,6 +32,14 @@ Y888888P VP   V8P    YP    Y88888P VP   V8P    YP     `Y88P'  88   YD    YP     
 
 		$sku = "CT-103";
 		$results = $fg->lookupInventory($sku);
+		echo json_encode($results);
+
+	break;
+
+
+	case "bulkinventory" :
+
+		$results = $fg->lookupInventoryBulk(1,10);
 		echo json_encode($results);
 
 	break;
