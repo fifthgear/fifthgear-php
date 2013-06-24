@@ -9,7 +9,7 @@ $results = null;
 Uncomment the service you'd like to test below
 ***************************************/
 
-//$testService = "invenotry";
+//$testService = "inventory";
 $testService = "bulkinventory";
 //$testService = "placeorder";
 //$testService = "trackorder";
@@ -39,7 +39,7 @@ Y888888P VP   V8P    YP    Y88888P VP   V8P    YP     `Y88P'  88   YD    YP     
 
 	case "bulkinventory" :
 
-		$results = $fg->lookupInventoryBulk(1,10);
+		$results = $fg->lookupInventoryBulk(1,3);
 		echo json_encode($results);
 
 	break;

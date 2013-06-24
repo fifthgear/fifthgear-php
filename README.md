@@ -9,7 +9,7 @@ Fifth Gear is an On-demand fulfillment solutions provider for direct retailers i
 
 Learn more about [Fifth Gear & our order fulfillment services](http://infifthgear.com/ "Order fulfillment").
 
-##Inventory Lookup
+##Single SKU Inventory Lookup
 
 With Fifth Gear's Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. 
 
@@ -22,10 +22,10 @@ With Fifth Gear's Inventory API, you can access real-time inventory data for you
 **Executing an Inventory Lookup**
     
     require_once('fifthgear.php');
-    $sc = new SigmaCommerce('companyid', 'username', 'password');
+    $fg = new FifthGear('companyid', 'username', 'password');
 
     $sku = "CT3";
-    $results = $sc->lookupInventory($sku);
+    $results = $fg->lookupInventory($sku);
     echo json_encode($results);
 
 **Successful Response**
@@ -44,22 +44,74 @@ With Fifth Gear's Inventory API, you can access real-time inventory data for you
 
 **Note:** SKU's that are not present in Fifth Gear will throw an error. We're unable to provide any inventory data on a product that's not in Fifth Gear.
 
+
+##Bulk SKUs Inventory Lookup
+
+With Fifth Gear's Bulk Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. This service will return a maximum of 5000 records per request. **You will be responsible for passing the correct starting index and end index.** 
+
+**Data Available**
+
+- Quantity available for purchase
+- Total SKUS
+- ItemNumber
+
+
+**Executing a Bulk Inventory Lookup**
+    
+    require_once('fifthgear.php');
+    $fg = new FifthGear('companyid', 'username', 'password');
+
+    $results = $fg->lookupInventoryBulk(1,3);
+    echo json_encode($results);
+
+**Successful Response**
+
+    {
+      "success": true,
+      "results": {
+        "ItemInventories": [
+          {
+            "AvailableToPurchaseQuantity": 162,
+            "ItemNumber": "10001",
+            "TotalSKUResult": 35105
+          },
+          {
+            "AvailableToPurchaseQuantity": 0,
+            "ItemNumber": "10002",
+            "TotalSKUResult": 35105
+          },
+          {
+            "AvailableToPurchaseQuantity": 0,
+            "ItemNumber": "10003",
+            "TotalSKUResult": 35105
+          }
+        ]
+      },
+      "request": {
+        "time": 2683,
+        "args": null
+      },
+      "errors": null,
+      "service": "ItemInventoryBulkLookup"
+ }
+
+
 ## Placing an Order 
 
 Use the Fifth Gear Order Submit API to send new orders from any application directly in to Fifth Gear's Warehouse Management Platform.
         
     require_once('fifthgear.php');
-    $sc = new SigmaCommerce('companyid', 'username', 'password');
+    $fg = new FifthGear('companyid', 'username', 'password');
 
-    $sc->addCustomer(array(
+    $fg->addCustomer(array(
         'firstName'=>'Brandon',
         'lastName'=>'McSmith',
         'email'=>'email@address.com'
     ));
 
-    $sc->setOrderId('12345');
+    $fg->setOrderId('12345');
 
-    $sc->addAddress('both', array(
+    $fg->addAddress('both', array(
         'address'=>'123456 Pine View Dr',
         'address2'=>'Suite 123',
         'postal'=>46032,
@@ -70,18 +122,18 @@ Use the Fifth Gear Order Submit API to send new orders from any application dire
         'lastName'=>'McSmith'
     ));
 
-    $sc->addItem(array(
+    $fg->addItem(array(
         'amount' => 1000,
         'sku' => 'CT-103',
         'qty' => 1
     ));
-    $sc->addItem(array(
+    $fg->addItem(array(
         'amount' => 1000,
         'sku' => 'CT-133',
         'qty' => 4
     ));
 
-    $sc->addPayment(array(
+    $fg->addPayment(array(
         'number' => '4111111111111111',
         'nameOnCard' => 'Brandon McSmith',
         'cvv' => '123',
@@ -89,7 +141,7 @@ Use the Fifth Gear Order Submit API to send new orders from any application dire
         'year' => '2044'
     ));
 
-    $results = $sc->placeOrder();
+    $results = $fg->placeOrder();
 
  **Cart Submit Response**
 
@@ -118,10 +170,10 @@ Use the Fifth Gear Order Submit API to send new orders from any application dire
 Track the status of an order, retrieve tracking information and more.
 
     require_once('fifthgear.php');
-    $sc = new SigmaCommerce('companyid', 'username', 'password');
+    $fg = new FifthGear('companyid', 'username', 'password');
 
     $orderid = "12345";
-    $results = $sc->trackOrder($orderid);
+    $results = $fg->trackOrder($orderid);
     echo json_encode($results);
 
 
