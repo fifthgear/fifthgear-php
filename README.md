@@ -11,7 +11,7 @@ Learn more about [Fifth Gear & our order fulfillment services](http://infifthgea
 
 ##Single SKU Inventory Lookup
 
-With Fifth Gear's Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. 
+With Fifth Gear's Inventory API you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. 
 
 **Data Available**
 
@@ -47,7 +47,7 @@ With Fifth Gear's Inventory API, you can access real-time inventory data for you
 
 ##Bulk SKUs Inventory Lookup
 
-With Fifth Gear's Bulk Inventory API, you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. This service will return a maximum of 5000 records per request. **You will be responsible for passing the correct starting index and end index.** 
+With Fifth Gear's Bulk Inventory API you can access real-time inventory data for your entire organization including warehouses, call center, and point of sale. This service will return a maximum of 5000 records per request. **You will be responsible for passing the correct starting index and end index.** 
 
 **Data Available**
 
