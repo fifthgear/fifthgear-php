@@ -66,7 +66,8 @@ With Fifth Gear's Bulk Inventory API you can access real-time inventory data for
 
 **Successful Response**
 
-   {
+
+    {
       "success": true,
       "results": {
         "ItemInventories": [
