@@ -35,7 +35,7 @@ class FifthGear {
 		 'user' 	=> null,
 		 'password' => null,
 		 'basepath'	=>'/test/v2.0/CommerceServices.svc',
-		 'host' 	=> 'commerceservices.infifthgear.com'
+		 'host' 	=> '[END-POINT-URL]'
 	);
 
 	/**
