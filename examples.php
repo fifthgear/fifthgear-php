@@ -77,7 +77,7 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 	case "placeorder" : 
 
 		// Test the different payment types Cash or Credit
-	
+
 		$type = "cash"; 
 		// $type = "credit"
 
@@ -127,7 +127,7 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 				'month' => '03',
 				'year' => '2044'
 			));
-		} elseif($type="cash") {
+		} elseif($type=="cash") {
 			// Using a "Cash" - any check number will do.
 			$fg->addCashPayment(array(
 				'checkNumber'=>1001
