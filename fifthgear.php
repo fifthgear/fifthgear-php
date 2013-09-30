@@ -1,11 +1,11 @@
-<? 
+<?php 
 
 /**
 *  FifthGear Client for PHP
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.1
+* @version    0.5.2
 * ...
 */
 
@@ -27,6 +27,8 @@ class FifthGear {
 	public $orderData = array();
 	public $inventoryData = array();
 	public $trackingData = array();
+	public $paymentType = null;
+	private $paymentZipcode = null;
 
 	/// Config container for company, username, password, and host
 	/// Unsure of your credentials or the base path?? Email prodsup 
@@ -34,8 +36,8 @@ class FifthGear {
 		 'company' 	=> null,	
 		 'user' 	=> null,
 		 'password' => null,
-		 'basepath'	=>'/test/v2.0/CommerceServices.svc',
-		 'host' 	=> '[END-POINT-URL]'
+		 'basepath'	=> null,
+		 'host' 	=> 'commerceservices.infifthgear.com'
 	);
 
 	/**
@@ -48,11 +50,17 @@ class FifthGear {
 	* @param string $password 
 	* @return object Self
 	*/
-	function __construct($companyid, $username, $password) {
+	function __construct($companyid, $username, $password, $mode='dev') {
 		
 		$this->config['company']=$companyid;
 		$this->config['user']=$username;
 		$this->config['password']=$password;
+
+		if($mode=='dev') {
+			$this->config['basepath']="/test/v2.0/CommerceServices.svc";
+		} else {
+			$this->config['basepath']="/v2.0/CommerceServices.svc";
+		}
 
 		// Create a blank order request Stub
 		$this->order = (object) 'text';
@@ -93,26 +101,10 @@ class FifthGear {
 				"OrderMessage": "",
 				"OrderReferenceNumber": "",
 				"Payment": {
-					"CreditCardPayments": [{
-						"AddressZip": "",
-						"AuthorizationAmount": null,
-						"AuthorizationCode": "",
-						"AuthorizationProcessor": "Authorize.Net",
-						"CVV": "",
-						"ExpirationMonth": "",
-						"ExpirationYear": "",
-						"HolderName": "",
-						"IsAuthorizationAmountSpecified": true,
-						"Number": "",
-						"OrderReferenceNumber": 100000,
-						"TransactionReferenceNumber": 100000
-					}],
 					"IsOnAccountPayment": "false",
-
 					"RedeemablePayments": []
 				},
 				"ShipTos": [{
-
 					"CarrierAccountNumber": "",
 					"ExternalShipCode": "ground",
 					"Recipient": {
@@ -135,7 +127,6 @@ class FifthGear {
 						"StateOrProvinceCode": null
 					},
 					"ShippingMethodCode": "XC"
-
 				}],
 				"Source": "",
 				"SourceCode": ""
@@ -152,14 +143,10 @@ class FifthGear {
 	private function call($service, $data=array()) {
 		// Init Curl
 		$curl = curl_init();
-
 		// Convert to JSON string if not already
 		$data = (is_string($data)) ? $data : json_encode($data);
 		
 		$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
-
-
-
 		// Curl Options
 		curl_setopt($curl, CURLOPT_URL, $callURL);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
@@ -338,7 +325,7 @@ class FifthGear {
 		$this->order->data->Request->BillingAddress->Organization 						= $addressPack->organization;
 		$this->order->data->Request->BillingAddress->Address1 							= $addressPack->address;
 		$this->order->data->Request->BillingAddress->Email 								= $addressPack->email;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 		= $addressPack->postal;
+		$this->paymentZipcode = $addressPack->postal;
 	}
 
 	/**
@@ -380,17 +367,49 @@ class FifthGear {
 	* @return object
 	*/
 	public function addPayment($params=array('number'=>null, 'cvv'=>null,'nameOnCard'=>null, 'month'=>null, 'year'=>null)) {
+		
+		$this->paymentType = "credit";
+
 		$number 	= (array_key_exists('number', $params)) ? $params['number'] : null;
-		$cvv 		= (array_key_exists('cvv', $data)) ? $params['cvv'] : null;
+		$cvv 		= (array_key_exists('cvv', $params)) ? $params['cvv'] : null;
 		$month 		= (array_key_exists('month', $params)) ? $params['month'] : null;
 		$year 		= (array_key_exists('year', $params)) ? $params['year'] : null;
 		$nameOnCard = (array_key_exists('nameOnCard', $params)) ? $params['nameOnCard'] : null;
 
-		$this->order->data->Request->Payment->CreditCardPayments[0]->CVV 				= $cvv;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->Number 			= $number;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->ExpirationMonth 	= $month;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->ExpirationYear 	= $year;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->HolderName 		= $nameOnCard;
+		$this->order->data->Request->Payment->CreditCardPayments = array();
+		$this->order->data->Request->Payment->CreditCardPayments[0] = (object)array();
+		
+		$this->order->data->Request->Payment->CreditCardPayments[0]->CVV 						= $cvv;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->Number 					= $number;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->ExpirationMonth 			= $month;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->ExpirationYear 			= $year;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->HolderName 				= $nameOnCard;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 				= "";
+		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount 		= null;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationCode 			= "";
+		$this->order->data->Request->Payment->CreditCardPayments[0]->Number 					= "";
+		$this->order->data->Request->Payment->CreditCardPayments[0]->IsAuthorizationAmountSpecified = true;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->OrderReferenceNumber 		= 100000;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->TransactionReferenceNumber = 100000;
+		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationProcessor 	= "Authorize.Net";
+
+	}
+
+	/**
+	* Place order with Cash
+	* This is used to place orders without needing a credit card.
+	*
+	* @return object FifthGearResponse
+	*/
+	public function addCashPayment($params=array('checkNumber'=>null)) {
+
+		$this->paymentType = "cash";
+
+		$this->order->data->Request->Payment->CashPayment 				= (object)array();
+		$this->order->data->Request->Payment->CashPayment->Amount 		= 0;
+		$this->order->data->Request->Payment->CashPayment->ChequeNumber	= $params['checkNumber'];
+		@$this->order->data->Request->Payment->CashPayment->ChequeDate	= '/Date('.(date("U",time())*1000).'-0500)/';
+
 
 	}
 	/**
@@ -421,7 +440,7 @@ class FifthGear {
 	* @return object FifthGearResponse
 	*/
 	public function placeOrder() { 
-		$this->order->data->Request->OrderDate = '/Date('.(date("U",time())*1000).'-0500)/';
+		@$this->order->data->Request->OrderDate = '/Date('.(date("U",time())*1000).'-0500)/';
 		if($this->order->data->Request->OrderReferenceNumber==null) {
 			$this->order->data->Request->OrderReferenceNumber = 'ord-'.substr(Hash('sha1', time().rand(0,100000)),0,8);
 		}
@@ -437,12 +456,20 @@ class FifthGear {
 
 		$this->order->data->Request->Charges[0]->Amount = $total; // Set the total
 
-		// If you didn't set the HolderName, we'll pull it from the billing first and last.
-		if($this->order->data->Request->Payment->CreditCardPayments[0]->HolderName==null) {
-			$this->order->data->Request->Payment->CreditCardPayments[0]->HolderName = $this->order->data->Request->BillingAddress->FirstName." ".$this->order->data->Request->BillingAddress->LastName;
+		if($this->paymentType=="credit") {
+			// If you didn't set the HolderName, we'll pull it from the billing first and last.
+			if($this->order->data->Request->Payment->CreditCardPayments[0]->HolderName==null) {
+				$this->order->data->Request->Payment->CreditCardPayments[0]->HolderName = $this->order->data->Request->BillingAddress->FirstName." ".$this->order->data->Request->BillingAddress->LastName;
+			}
+			$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 	= $this->paymentZipcode;
+			// Set authorization amount - not sure if this is needed anymore.
+			$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount = $total;
+				
+		} else {
+			// If it's a cash payment
+			$this->order->data->Request->Payment->CashPayment->Amount = $total;
 		}
-		// Set authorization amount - not sure if this is needed anymore.
-		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount = $total;
+
 		$this->order->data->Request->CountryCode = $this->order->data->Request->ShipTos[0]->ShippingAddress->CountryCode;
 
 		return $this->call('CartSubmit', $this->order->data);
@@ -467,6 +494,13 @@ class FifthGear {
 		} 
 
 		$success = false;
+
+		if($responsej->OperationRequest==null) {
+			$responsej->OperationRequest = (object)array('Errors'=>null);
+			$responsej->OperationRequest->RequestProcessingTime = null;
+			$responsej->OperationRequest->Arguments = null;
+		}
+
 		if($responsej->OperationRequest->Errors == null) {
 			$success = true;
 		} else {
@@ -487,6 +521,10 @@ class FifthGear {
 			'errors' => $errors,
 			'service'=>$service
 		);
+
+		if($service=="CartSubmit") {
+			$finalResponse['orderId'] = $data->Request->OrderReferenceNumber;
+		}
 
 		return $finalResponse;
 	}

@@ -1,13 +1,16 @@
-<?
+<?php
 
 require_once('fifthgear.php');
 
-$fg = new FifthGear('companyid', 'user', 'password');
+$fg = new FifthGear('companyid', 'username', 'password', 'dev');
 
 $results = null;
 
 /***************************************
+
+Hey User:
 Uncomment the service you'd like to test below
+
 ***************************************/
 
 //$testService = "inventory";
@@ -40,7 +43,7 @@ Y888888P VP   V8P    YP    Y88888P VP   V8P    YP     `Y88P'  88   YD    YP     
 
 	case "bulkinventory" :
 
-		$results = $fg->lookupInventoryBulk(1,3);
+		$results = $fg->lookupInventoryBulk(1,10);
 		echo json_encode($results);
 
 	break;
@@ -73,13 +76,19 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 *****************************************************************************************************/
 	case "placeorder" : 
 
+		// Test the different payment types Cash or Credit
+	
+		$type = "cash"; 
+		// $type = "credit"
+
 		$fg->addCustomer(array(
 			'firstName'=>'Brandon',
 			'lastName'=>'McSmith',
 			'email'=>'brandon@McSmith.com'
 		));
 
-		$fg->setOrderId('1234x5'); // This needs to be a unique ID each time you create an order
+		// This needs to be a unique ID each time you create an order
+		$fg->setOrderId('order-'.substr(md5(time().rand(100,10900000)), 0,10)); 
 
 		$fg->addAddress('both', array(
 			'address'=>'123456 Pine View Dr',
@@ -99,17 +108,33 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 		));
 		$fg->addItem(array(
 			'amount' => 1000,
-			'sku' => 'CT-133',
-			'qty' => 4
+			'sku' => '10001',
+			'qty' => 1
 		));
 
-		$fg->addPayment(array(
-			'number' => '4111111111111111',
-			'nameOnCard' => 'Brandon McSmith',
-			'cvv' => '123',
-			'month' => '03',
-			'year' => '2044'
-		));
+		/***************************************
+		
+		Checking out with Cash or Credit
+
+		***************************************/
+
+		if($type=="credit") {
+			// Using a Credit Card
+			$fg->addPayment(array(
+				'number' => '4111111111111111',
+				'nameOnCard' => 'Brandon McSmith',
+				'cvv' => '123',
+				'month' => '03',
+				'year' => '2044'
+			));
+		} elseif($type="cash") {
+			// Using a "Cash" - any check number will do.
+			$fg->addCashPayment(array(
+				'checkNumber'=>1001
+			));
+		}
+
+		
 
 		$results = $fg->placeOrder();
 		echo json_encode($results);
