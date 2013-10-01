@@ -29,6 +29,7 @@ class FifthGear {
 	public $trackingData = array();
 	public $paymentType = null;
 	private $paymentZipcode = null;
+	private $paymentGateway = 'Authorize.Net';
 
 	/// Config container for company, username, password, and host
 	/// Unsure of your credentials or the base path?? Email prodsup 
@@ -387,11 +388,10 @@ class FifthGear {
 		$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 				= "";
 		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount 		= null;
 		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationCode 			= "";
-		$this->order->data->Request->Payment->CreditCardPayments[0]->Number 					= "";
 		$this->order->data->Request->Payment->CreditCardPayments[0]->IsAuthorizationAmountSpecified = true;
 		$this->order->data->Request->Payment->CreditCardPayments[0]->OrderReferenceNumber 		= 100000;
 		$this->order->data->Request->Payment->CreditCardPayments[0]->TransactionReferenceNumber = 100000;
-		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationProcessor 	= "Authorize.Net";
+		$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationProcessor 	= $this->paymentGateway;
 
 	}
 
