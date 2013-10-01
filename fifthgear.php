@@ -551,6 +551,26 @@ class FifthGear {
 	}
 
 	/**
+	* Get a State Name from a State Code 
+	*/
+	
+	public function getStateName($stateCode) {
+
+		$stateID = trim(strtoupper($stateInitials));
+		$codes = json_decode($this->stateCodes);
+
+		foreach($codes as $key => $code) {
+
+			if($code->code==$stateCode) {
+				return $key;
+			}
+		}
+
+		return null;
+	
+	}
+
+	/**
 	* Get a FifthGear Country Code
 	*
 	* Returns the internal FifthGear Country code for a given Country
