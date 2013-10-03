@@ -5,7 +5,7 @@
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.2
+* @version    0.5.3
 * ...
 */
 
@@ -59,7 +59,7 @@ class FifthGear {
 
 		if($mode=='prod') {
 			$this->config['basepath']="/v2.0/CommerceServices.svc";
-		} else {
+		} else{
 			$this->config['basepath']="/test/v2.0/CommerceServices.svc";
 		}
 
@@ -304,6 +304,7 @@ class FifthGear {
 		$this->order->data->Request->ShipTos[0]->ShippingAddress->Organization 			= $addressPack->organization;
 		$this->order->data->Request->ShipTos[0]->ShippingAddress->Email 				= $addressPack->email;
 		$this->order->data->Request->ShipTos[0]->ShippingAddress->IsGiftAddress 		= $addressPack->gift;
+		$this->order->data->Request->ShipTos[0]->ShippingAddress->PostalCode 			= $addressPack->postal;
 		$this->order->data->Request->ShipTos[0]->Recipient->FirstName 					= $addressPack->firstName;
 		$this->order->data->Request->ShipTos[0]->Recipient->LastName 					= $addressPack->lastName;
 
@@ -412,6 +413,19 @@ class FifthGear {
 
 
 	}
+
+
+	/**
+	* Set an Shipping Charge for an Order
+	*
+	* @param string $id
+	* @return bool
+	*/
+	public function addShippingCharge($amount) {
+		$this->order->data->Request->Charges[0]->Amount = $amount;
+		return true;
+	}
+
 	/**
 	* Set an OrderID for an Order
 	*
@@ -422,6 +436,9 @@ class FifthGear {
 		$this->order->data->Request->OrderReferenceNumber = $id;
 		return true;
 	}
+
+
+
 
 	/**
 	* Get the OrderId for the current Object
@@ -454,7 +471,7 @@ class FifthGear {
 			// $total = $total + ($item->Amount*$item->Quantity);
 		}
 
-		$this->order->data->Request->Charges[0]->Amount = $total; // Set the total
+		//$this->order->data->Request->Charges[0]->Amount = $total; // Set the total
 
 		if($this->paymentType=="credit") {
 			// If you didn't set the HolderName, we'll pull it from the billing first and last.
@@ -556,7 +573,6 @@ class FifthGear {
 	
 	public function getStateName($stateCode) {
 
-		$stateID = trim(strtoupper($stateInitials));
 		$codes = json_decode($this->stateCodes);
 
 		foreach($codes as $key => $code) {
