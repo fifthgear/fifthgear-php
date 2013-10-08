@@ -149,6 +149,9 @@ Submit an Credit Card order directly to Fifth Gear's Fulfillment Platform. **NOT
         'qty' => 4
     ));
 
+    // Add a Shipping Charge
+    $fg->addShippingCharge(12);
+
     $fg->addPayment(array(
         'number' => '4111111111111111',
         'nameOnCard' => 'Brandon McSmith',
@@ -197,6 +200,9 @@ You might need the ability to place an order while not collecting a users credit
         'sku' => 'CT-133',
         'qty' => 4
     ));
+
+    // Add a Shipping Charge
+    $fg->addShippingCharge(12);
 
     // Add a Cash Payment (Any CheckNumber is accepted)
     $fg->addCashPayment(array(

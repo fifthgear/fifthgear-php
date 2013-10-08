@@ -101,6 +101,9 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 			'lastName'=>'McSmith'
 		));
 
+		// Add a Shipping Charge
+		$fg->addShippingCharge(12);
+
 		$fg->addItem(array(
 			'amount' => 1000,
 			'sku' => 'CT-103',

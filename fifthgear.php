@@ -5,7 +5,7 @@
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.3
+* @version    0.5.4
 * ...
 */
 
@@ -126,8 +126,7 @@ class FifthGear {
 						"PhoneNumber": "",
 						"PostalCode": "",
 						"StateOrProvinceCode": null
-					},
-					"ShippingMethodCode": "XC"
+					}
 				}],
 				"Source": "",
 				"SourceCode": ""
@@ -418,7 +417,7 @@ class FifthGear {
 	/**
 	* Set an Shipping Charge for an Order
 	*
-	* @param string $id
+	* @param number $amount
 	* @return bool
 	*/
 	public function addShippingCharge($amount) {
@@ -473,6 +472,14 @@ class FifthGear {
 
 		//$this->order->data->Request->Charges[0]->Amount = $total; // Set the total
 
+		$shippingCharge = 0;
+		foreach($this->order->data->Request->Charges as $charge) {
+
+			if($charge->ChargeCode=="Shipping Charges") {
+				$shippingCharge = $shippingCharge + $shippingCharge+$charge->Amount;
+			}
+		}
+
 		if($this->paymentType=="credit") {
 			// If you didn't set the HolderName, we'll pull it from the billing first and last.
 			if($this->order->data->Request->Payment->CreditCardPayments[0]->HolderName==null) {
@@ -480,16 +487,20 @@ class FifthGear {
 			}
 			$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 	= $this->paymentZipcode;
 			// Set authorization amount - not sure if this is needed anymore.
-			$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount = $total;
+			$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount = $total + $shippingCharge;
 				
 		} else {
 			// If it's a cash payment
-			$this->order->data->Request->Payment->CashPayment->Amount = $total;
+			// Add shipping charges to total Amount
+			$this->order->data->Request->Payment->CashPayment->Amount = $total + $shippingCharge;
+
 		}
 
 		$this->order->data->Request->CountryCode = $this->order->data->Request->ShipTos[0]->ShippingAddress->CountryCode;
 
+		//echo json_encode($this->order->data->Request);
 		return $this->call('CartSubmit', $this->order->data);
+	
 	}
 	
 	/// handleResponse is the generic handler for a FifthGear response
