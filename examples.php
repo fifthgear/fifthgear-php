@@ -99,6 +99,7 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 			'country'=>'USA',
 			'firstName'=>'Brandon',
 			'lastName'=>'McSmith'
+			'email'=>'brandon@email.com'
 		));
 
 		// Add a Shipping Charge

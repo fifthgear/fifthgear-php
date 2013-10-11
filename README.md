@@ -178,16 +178,17 @@ You might need the ability to place an order while not collecting a users credit
 
     $fg->setOrderId('12345');
 
-    $fg->addAddress('both', array(
-        'address'=>'123456 Pine View Dr',
-        'address2'=>'Suite 123',
-        'postal'=>46032,
-        'city'=>'Carmel',
-        'state'=>'IN',
-        'country'=>'USA',
-        'firstName'=>'Brandon',
-        'lastName'=>'McSmith'
-    ));
+     $fg->addAddress('both', array(
+       'address'=>'123456 Pine View Dr',
+       'address2'=>'Suite 123',
+       'postal'=>46032,
+       'city'=>'Carmel',
+       'state'=>'IN',
+       'country'=>'USA',
+       'firstName'=>'Brandon',
+       'lastName'=>'McSmith',
+       'email'=>'brandon@email.com'
+   ));
 
     $fg->addItem(array(
         'amount' => 1000,
