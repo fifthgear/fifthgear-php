@@ -361,7 +361,7 @@ You might need the ability to place an order while not collecting a users credit
        'firstName'=>'Brandon',
        'lastName'=>'McSmith',
        'email'=>'brandon@email.com'
-   ));
+    ));
 
     $fg->addItem(array(
         'amount' => 1000,
