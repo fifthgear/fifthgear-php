@@ -2,34 +2,76 @@
 
 require_once('fifthgear.php');
 
+// First with setup the Fifth Gear API
 $fg = new FifthGear('companyid', 'username', 'password', 'dev');
 
 $results = null;
 
-/***************************************
 
-Hey User:
-Uncomment the service you'd like to test below
+///
+// How to access the different testing methods
+// localhost/examples.php?service=inventory
+// Or you can pick the service manually by uncommenting the defaultService below.
+///
 
-***************************************/
+//$defaultService = "inventory";
+//$defaultService = "bulkinventory";
+//$defaultService = "getItemDetail";
+//$defaultService = "personalization";
+$defaultService = "placeorder";
+//$defaultService = "trackorder";
+//$defaultService = "codes";
 
-//$testService = "inventory";
-$testService = "bulkinventory";
-//$testService = "placeorder";
-//$testService = "trackorder";
-//$testService = "codes";
+$testService = (array_key_exists("service", $_GET)) ? $_GET['service'] : $defaultService;
 
 header("Content-Type:text/json");
 
 switch($testService) {
 
+/***************************************
+	    ______                    __                __             
+	   /  _/ /____  ____ ___     / /   ____  ____  / /____  ______ 
+	   / // __/ _ \/ __ `__ \   / /   / __ \/ __ \/ //_/ / / / __ \
+	 _/ // /_/  __/ / / / / /  / /___/ /_/ / /_/ / ,< / /_/ / /_/ /
+	/___/\__/\___/_/ /_/ /_/  /_____/\____/\____/_/|_|\__,_/ .___/ 
+	                                                      /_/           
+***************************************/
+
+	case "getItemDetail" :
+
+		$results = $fg->getItemDetail('WP-136');
+		echo json_encode($results);
+
+	break;
+
+/***************************************
+	   ______     __     ______                    ____                                   ___             __  _           
+	  / ____/__  / /_   /  _/ /____  ____ ___     / __ \___  ______________  ____  ____ _/ (_)___  ____ _/ /_(_)___  ____ 
+	 / / __/ _ \/ __/   / // __/ _ \/ __ `__ \   / /_/ / _ \/ ___/ ___/ __ \/ __ \/ __ `/ / /_  / / __ `/ __/ / __ \/ __ \
+	/ /_/ /  __/ /_   _/ // /_/  __/ / / / / /  / ____/  __/ /  (__  ) /_/ / / / / /_/ / / / / /_/ /_/ / /_/ / /_/ / / / /
+	\____/\___/\__/  /___/\__/\___/_/ /_/ /_/  /_/    \___/_/  /____/\____/_/ /_/\__,_/_/_/ /___/\__,_/\__/_/\____/_/ /_/ 
+
+	Item Personalization fields can be pulled from Fifth Gear using the getItemPersonalizationOptions method. 
+
+	It's recommended that this call isn't used in real time. This method is very resource and time intensive, 
+	and should be used to rarely to pull down the data for local storage.
+	                                                                                                                      
+***************************************/
+
+	case "personalization" : 
+
+		$results = $fg->getItemPersonalizationOptions('WP-136');
+		echo json_encode($results);
+
+	break;
+
 /**********************************************************************************************************************************
-d888888b d8b   db db    db d88888b d8b   db d888888b  .d88b.  d8888b. db    db   db       .d88b.   .d88b.  db   dD db    db d8888b. 
-  `88'   888o  88 88    88 88'     888o  88 `~~88~~' .8P  Y8. 88  `8D `8b  d8'   88      .8P  Y8. .8P  Y8. 88 ,8P' 88    88 88  `8D 
-   88    88V8o 88 Y8    8P 88ooooo 88V8o 88    88    88    88 88oobY'  `8bd8'    88      88    88 88    88 88,8P   88    88 88oodD' 
-   88    88 V8o88 `8b  d8' 88~~~~~ 88 V8o88    88    88    88 88`8b      88      88      88    88 88    88 88`8b   88    88 88~~~   
-  .88.   88  V888  `8bd8'  88.     88  V888    88    `8b  d8' 88 `88.    88      88booo. `8b  d8' `8b  d8' 88 `88. 88b  d88 88      
-Y888888P VP   V8P    YP    Y88888P VP   V8P    YP     `Y88P'  88   YD    YP      Y88888P  `Y88P'   `Y88P'  YP   YD ~Y8888P' 88      
+	    ____                      __                      __                __             
+	   /  _/___ _   _____  ____  / /_____  _______  __   / /   ____  ____  / /____  ______ 
+	   / // __ \ | / / _ \/ __ \/ __/ __ \/ ___/ / / /  / /   / __ \/ __ \/ //_/ / / / __ \
+	 _/ // / / / |/ /  __/ / / / /_/ /_/ / /  / /_/ /  / /___/ /_/ / /_/ / ,< / /_/ / /_/ /
+	/___/_/ /_/|___/\___/_/ /_/\__/\____/_/   \__, /  /_____/\____/\____/_/|_|\__,_/ .___/ 
+	                                         /____/                               /_/      
 **********************************************************************************************************************************/
 
 	case "inventory" :
@@ -49,12 +91,12 @@ Y888888P VP   V8P    YP    Y88888P VP   V8P    YP     `Y88P'  88   YD    YP     
 	break;
 
 /*****************************************************************************************************
-d888888b d8888b.  .d8b.   .o88b. db   dD    .d8b.  d8b   db    .d88b.  d8888b. d8888b. d88888b d8888b. 
-`~~88~~' 88  `8D d8' `8b d8P  Y8 88 ,8P'   d8' `8b 888o  88   .8P  Y8. 88  `8D 88  `8D 88'     88  `8D 
-   88    88oobY' 88ooo88 8P      88,8P     88ooo88 88V8o 88   88    88 88oobY' 88   88 88ooooo 88oobY' 
-   88    88`8b   88~~~88 8b      88`8b     88~~~88 88 V8o88   88    88 88`8b   88   88 88~~~~~ 88`8b   
-   88    88 `88. 88   88 Y8b  d8 88 `88.   88   88 88  V888   `8b  d8' 88 `88. 88  .8D 88.     88 `88. 
-   YP    88   YD YP   YP  `Y88P' YP   YD   YP   YP VP   V8P    `Y88P'  88   YD Y8888D' Y88888P 88   YD 
+	  ______                __                      __   ____           __         
+	 /_  __/________ ______/ /__   ____ _____  ____/ /  / __ \_________/ /__  _____
+	  / / / ___/ __ `/ ___/ //_/  / __ `/ __ \/ __  /  / / / / ___/ __  / _ \/ ___/
+	 / / / /  / /_/ / /__/ ,<    / /_/ / / / / /_/ /  / /_/ / /  / /_/ /  __/ /    
+	/_/ /_/   \__,_/\___/_/|_|   \__,_/_/ /_/\__,_/   \____/_/   \__,_/\___/_/     
+	                                                                               
 ******************************************************************************************************/
 
 	case "trackorder"  :
@@ -67,54 +109,84 @@ d888888b d8888b.  .d8b.   .o88b. db   dD    .d8b.  d8b   db    .d88b.  d8888b. d
 	break;
 
 /*****************************************************************************************************
-d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8888b. d88888b d8888b. 
-88  `8D 88      d8' `8b d8P  Y8 88'       d8' `8b 888o  88   .8P  Y8. 88  `8D 88  `8D 88'     88  `8D 
-88oodD' 88      88ooo88 8P      88ooooo   88ooo88 88V8o 88   88    88 88oobY' 88   88 88ooooo 88oobY' 
-88~~~   88      88~~~88 8b      88~~~~~   88~~~88 88 V8o88   88    88 88`8b   88   88 88~~~~~ 88`8b   
-88      88booo. 88   88 Y8b  d8 88.       88   88 88  V888   `8b  d8' 88 `88. 88  .8D 88.     88 `88. 
-88      Y88888P YP   YP  `Y88P' Y88888P   YP   YP VP   V8P    `Y88P'  88   YD Y8888D' Y88888P 88   YD 
+	    ____  __                   ___             ____           __         
+	   / __ \/ /___ _________     /   |  ____     / __ \_________/ /__  _____
+	  / /_/ / / __ `/ ___/ _ \   / /| | / __ \   / / / / ___/ __  / _ \/ ___/
+	 / ____/ / /_/ / /__/  __/  / ___ |/ / / /  / /_/ / /  / /_/ /  __/ /    
+	/_/   /_/\__,_/\___/\___/  /_/  |_/_/ /_/   \____/_/   \__,_/\___/_/     
+	                                                                         
 *****************************************************************************************************/
 	case "placeorder" : 
 
 		// Test the different payment types Cash or Credit
 
-		$type = "cash"; 
-		// $type = "credit"
+		//$type = "cash"; 
+		$type = "credit";
 
+		// Add a customer to this order
 		$fg->addCustomer(array(
-			'firstName'=>'Brandon',
-			'lastName'=>'McSmith',
-			'email'=>'brandon@McSmith.com'
+			'firstName'	=>'Bob',
+			'lastName'	=>'Smith',
+			'email'		=>'bob.smith@prodigy.net'
 		));
 
-		// This needs to be a unique ID each time you create an order
+		// The Order ID MUST BE UNIQUE. Duplicate order ID's will fail.
+		// In this example we'll just generate a random 10 character string.
 		$fg->setOrderId('order-'.substr(md5(time().rand(100,10900000)), 0,10)); 
 
+		// the Address Method can be used to populate both "shipping" "billing" or "both";
+		// Make sure to provide an email address for the address block. 
 		$fg->addAddress('both', array(
-			'address'=>'123456 Pine View Dr',
-			'address2'=>'Suite 123',
-			'postal'=>46032,
-			'city'=>'Carmel',
-			'state'=>'IN',
-			'country'=>'USA',
-			'firstName'=>'Brandon',
-			'lastName'=>'McSmith'
-			'email'=>'brandon@email.com'
+			'address'	=>'123456 Pine View Dr',
+			'address2'	=>'Suite 123',
+			'postal'	=>46032,
+			'city'		=>'Carmel',
+			'state'		=>'IN',
+			'country'	=>'USA',
+			'firstName'	=>'Bob',
+			'lastName'	=>'Smith',
+			'email'		=>'bob.smith@prodigy.net'
 		));
 
-		// Add a Shipping Charge
+		// Add a $12 shipping charge.
 		$fg->addShippingCharge(12);
 
+
+		/*
+			::: ITEMS WITH PERSONALIZATION :::
+
+			You can also add items to your cart that support product personalization.
+			You first need to know the different personalization options for a given option using the getItemPersonalizationOptions() method. 
+			- Pass the TemplateNumber (as a string) for the item
+			- Pass an array of personalizations options 
+				- Number = the TemplateSequence 
+				- Response = the data to be personalized
+		
+		*/
+
+		// Add a item to the order
 		$fg->addItem(array(
-			'amount' => 1000,
-			'sku' => 'CT-103',
-			'qty' => 1
+			'amount'=> 900,
+			'sku' 	=> 'WP-136',
+			'qty' 	=> 1
 		));
+
+		// Add an item with personalization to the order
 		$fg->addItem(array(
-			'amount' => 1000,
-			'sku' => '10001',
-			'qty' => 1
+			'amount'=> 900,
+			'sku' 	=> 'WP-136',
+			'qty' 	=> 1,
+			'personalizationTemplateNumber'=>'62', // Must be a string
+			'personalizations'=>array(
+				array( 'Number'=>1, 'Response'=>'1971'),
+				array( 'Number'=>2, 'Response'=>'VIN123'),
+				array( 'Number'=>3, 'Response'=>'1234-motor-date-code')
+			)
 		));
+
+
+		
+
 
 		/***************************************
 		
@@ -125,11 +197,11 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 		if($type=="credit") {
 			// Using a Credit Card
 			$fg->addPayment(array(
-				'number' => '4111111111111111',
-				'nameOnCard' => 'Brandon McSmith',
-				'cvv' => '123',
-				'month' => '03',
-				'year' => '2044'
+				'number' 	=> '4111111111111111',
+				'nameOnCard'=> 'Brandon McSmith',
+				'cvv' 		=> '123',
+				'month' 	=> '03',
+				'year' 		=> '2044'
 			));
 		} elseif($type=="cash") {
 			// Using a "Cash" - any check number will do.
@@ -137,32 +209,37 @@ d8888b. db       .d8b.   .o88b. d88888b    .d8b.  d8b   db    .d88b.  d8888b. d8
 				'checkNumber'=>1001
 			));
 		}
-
 		
+		$output = array(
+			'placeorder'=>$fg->placeOrder(),
+			'orderData'=>$fg->getOrderData()
+		);
 
-		$results = $fg->placeOrder();
-		echo json_encode($results);
+	//	$results = $fg->placeOrder();
+		
+		//$results = $fg->getOrderData();
+		echo json_encode($output);
 
 	break; 
 
 /**************************************************************************************************************************************************
-.d8888. d888888b  .d8b.  d888888b d88888b    .o88b.  .d88b.  db    db d8b   db d888888b d8888b. db    db    .o88b.  .d88b.  d8888b. d88888b .d8888. 
-88'  YP `~~88~~' d8' `8b `~~88~~' 88'       d8P  Y8 .8P  Y8. 88    88 888o  88 `~~88~~' 88  `8D `8b  d8'   d8P  Y8 .8P  Y8. 88  `8D 88'     88'  YP 
-`8bo.      88    88ooo88    88    88ooooo   8P      88    88 88    88 88V8o 88    88    88oobY'  `8bd8'    8P      88    88 88   88 88ooooo `8bo.   
-  `Y8b.    88    88~~~88    88    88~~~~~   8b      88    88 88    88 88 V8o88    88    88`8b      88      8b      88    88 88   88 88~~~~~   `Y8b. 
-db   8D    88    88   88    88    88.       Y8b  d8 `8b  d8' 88b  d88 88  V888    88    88 `88.    88      Y8b  d8 `8b  d8' 88  .8D 88.     db   8D 
-`8888Y'    YP    YP   YP    YP    Y88888P    `Y88P'  `Y88P'  ~Y8888P' VP   V8P    YP    88   YD    YP       `Y88P'  `Y88P'  Y8888D' Y88888P `8888Y' 
+	   _____ __        __                          __   ______                  __                ______          __         
+	  / ___// /_____ _/ /____     ____ _____  ____/ /  / ____/___  __  ______  / /________  __   / ____/___  ____/ /__  _____
+	  \__ \/ __/ __ `/ __/ _ \   / __ `/ __ \/ __  /  / /   / __ \/ / / / __ \/ __/ ___/ / / /  / /   / __ \/ __  / _ \/ ___/
+	 ___/ / /_/ /_/ / /_/  __/  / /_/ / / / / /_/ /  / /___/ /_/ / /_/ / / / / /_/ /  / /_/ /  / /___/ /_/ / /_/ /  __(__  ) 
+	/____/\__/\__,_/\__/\___/   \__,_/_/ /_/\__,_/   \____/\____/\__,_/_/ /_/\__/_/   \__, /   \____/\____/\__,_/\___/____/  
+	                                                                                 /____/                                  
 ***************************************************************************************************************************************************/
 
 	case "codes" : 
 		
 		echo json_encode(array(
-			'CAN'	=> $fg->getCountryCode('CAN'),
-			'USA'	=> $fg->getCountryCode('USA'),
-			'GRC'	=> $fg->getCountryCode('GRC'),
-			'IN'	=> $fg->getStateCode('IN'),
-			'OH'	=> $fg->getStateCode('OH'),
-			'CA'	=> $fg->getStateCode('CA')
+			'CAN' => $fg->getCountryCode('CAN'),
+			'USA' => $fg->getCountryCode('USA'),
+			'GRC' => $fg->getCountryCode('GRC'),
+			'IN' => $fg->getStateCode('IN'),
+			'OH' => $fg->getStateCode('OH'),
+			'CA' => $fg->getStateCode('CA')
 		));
 
 	break;

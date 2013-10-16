@@ -5,7 +5,7 @@
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.4
+* @version    0.5.7
 * ...
 */
 
@@ -176,6 +176,10 @@ class FifthGear {
 
 	}
 
+	public function getOrderData() {
+		return $this->order->data;
+	}
+
 
 	/***************************************
 	
@@ -226,8 +230,33 @@ class FifthGear {
 
 	}
 
-	
+	/**
+	* Lookup an Items Detail
+	*
+	* @param array sku 
+	* @return json
+	*/
 
+	public function getItemDetail($sku) {
+
+		$data = (object) "ItemLookup";
+		$data->CompanyId = $this->config['company'];
+		$data->Request=$sku;	
+
+		return $this->call('ItemLookup', $data);
+
+	}
+
+	public function getItemPersonalizationOptions($sku) {
+
+		$data = (object) "ExportItemPersonalizationData";
+		$data->CompanyId = $this->config['company'];
+		$data->Request=$sku;
+
+		return $this->call('ExportItemPersonalizationData', $data);
+
+	}
+	
 	/**
 	* Add a Customer to an Order
 	*
@@ -238,7 +267,9 @@ class FifthGear {
 		$this->order->data->Request->Customer->FirstName =$params['firstName'];
 		$this->order->data->Request->Customer->LastName =$params['lastName'];
 		$this->order->data->Request->Customer->Email = $params['email'];
+		
 		return true;
+	
 	}
 
 	/**
@@ -348,7 +379,21 @@ class FifthGear {
 		$item->GroupName 		= null;
 		$item->LineNumber 		= $lineNumber;
 		$item->Comments 		= null;
+		$personalizations	= (array_key_exists('personalizations', $data)) ? $data['personalizations'] : null;
+		$templateNumber	= (array_key_exists('personalizationTemplateNumber', $data)) ? $data['personalizationTemplateNumber'] : null;
 		
+		if($personalizations!=null&&$templateNumber!=null) {
+			$personalObj = (object)'Personalizations';
+			$personalObj->TemplateNumber = '62';
+			//$personalizations->Personalization = (object)'Personalization';
+			$personalObj->Personalization = array(
+				array( 'Number'=>1, 'Response'=>'1971'),
+				array( 'Number'=>2, 'Response'=>'VIN123'),
+				array( 'Number'=>3, 'Response'=>'1234-motor-date-code')
+			);
+			$item->Personalizations = $personalObj;
+		}
+
 		$this->order->data->Request->Items[count($this->order->data->Request->Items)]=$item;
 
 	}
