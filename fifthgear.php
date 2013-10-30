@@ -5,7 +5,7 @@
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.7
+* @version    0.5.8
 * ...
 */
 
@@ -146,7 +146,8 @@ class FifthGear {
 		// Convert to JSON string if not already
 		$data = (is_string($data)) ? $data : json_encode($data);
 		
-		$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
+		$callURL = 'https://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
+
 		// Curl Options
 		curl_setopt($curl, CURLOPT_URL, $callURL);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
