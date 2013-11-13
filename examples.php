@@ -5,9 +5,6 @@ require_once('fifthgear.php');
 // First with setup the Fifth Gear API
 $fg = new FifthGear('companyid', 'username', 'password', 'dev');
 
-$results = null;
-
-
 ///
 // How to access the different testing methods
 // localhost/examples.php?service=inventory
@@ -185,7 +182,13 @@ switch($testService) {
 		));
 
 
-		
+		$fg->order->data->Request->OrderMessage1 = "This is message 1";
+		$fg->order->data->Request->OrderMessage2 = "This is message 2";
+		$fg->order->data->Request->OrderMessage3 = "This is message 3";
+		$fg->order->data->Request->OrderMessage4 = "This is message 4";
+		$fg->order->data->Request->OrderMessage5 = "This is message 5";
+		$fg->order->data->Request->OrderMessage6 = "This is message 6";
+
 
 
 		/***************************************
@@ -215,10 +218,10 @@ switch($testService) {
 			'orderData'=>$fg->getOrderData()
 		);
 
-	//	$results = $fg->placeOrder();
+		$results = $fg->placeOrder();
 		
-		//$results = $fg->getOrderData();
-		echo json_encode($output);
+		$results = $fg->getOrderData();
+		echo json_encode($results);
 
 	break; 
 

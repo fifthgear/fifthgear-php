@@ -5,7 +5,7 @@
 *
 * @package    FifthGear
 * @author     Brandon Corbin
-* @version    0.5.8
+* @version    0.5.7
 * ...
 */
 
@@ -147,7 +147,6 @@ class FifthGear {
 		$data = (is_string($data)) ? $data : json_encode($data);
 		
 		$callURL = 'https://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
-
 		// Curl Options
 		curl_setopt($curl, CURLOPT_URL, $callURL);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
@@ -155,7 +154,9 @@ class FifthGear {
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		curl_setopt($curl, CURLOPT_HEADER, false);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 		$response = curl_exec($curl);
+
 		curl_close ($curl);
 	
 		return $this->handleResponse($response, $service, json_decode($data));
@@ -558,6 +559,8 @@ class FifthGear {
 		$responsej = json_decode($response);
 		$errors = null;
 
+
+
 		if (json_last_error() === JSON_ERROR_NONE) { 
 		    //do something with $json. It's ready to use 
 			
@@ -565,9 +568,17 @@ class FifthGear {
 		    //yep, it's not JSON. Log error or alert someone or do nothing 
 		    $responsej = (object) "error";
 		    $responsej->message = $response;
+		    $responsej->OperationRequest = null;
 		} 
 
 		$success = false;
+
+		if($responsej==null) {
+			$responsej = (object) "error";
+		    $responsej->message = $response;
+		    $responsej->OperationRequest = null;
+		    $responsej->Response = null;
+		}
 
 		if($responsej->OperationRequest==null) {
 			$responsej->OperationRequest = (object)array('Errors'=>null);
