@@ -412,10 +412,9 @@ You might need the ability to place an order while not collecting a users credit
 **NOTES for Order Placing**
 
 - States provided must be in the 2 digit alpha format. e.g. IN, OH, CA, MA
-- Counties provided must be in the 3 digit alpha format. e.g. USA, CAN
  - A collection of all state codes can be found with the object **sc.stateCodes**
 - Country provided must be in their 3 Digit Format. e.g. USA, CAN, ALA
-- A collection of all country codes can be found with the object **sc.countryCodes**
+ - A collection of all country codes can be found with the object **sc.countryCodes**
 
 ## Track Order
 
