@@ -145,8 +145,11 @@ class FifthGear {
 		$curl = curl_init();
 		// Convert to JSON string if not already
 		$data = (is_string($data)) ? $data : json_encode($data);
+
+		return $data;
+		die();
 		
-		$callURL = 'https://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
+		$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
 		// Curl Options
 		curl_setopt($curl, CURLOPT_URL, $callURL);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
@@ -229,6 +232,27 @@ class FifthGear {
 		$data->endRange = $end;
 
 		return $this->call('ItemInventoryBulkLookup', $data);
+
+	}
+
+
+	/**
+	* Get the current status of a subset of Orders
+	* 
+	* @param integer $start number of items to start at. 
+	* @param integer $end number of items to stop at (max 5000 results per request)
+	* @return object FifthGearResponse
+	*/
+	public function lookupOrderStatusBulk($fromDate=null, $toDate=null, $start=1,$end=100) {
+
+		$data = (object) "OrderStatusBulkLookup";
+		$data->CompanyId = $this->config['company'];
+		@$data->FromDate='/Date('.(date("U",$fromDate)*1000).'-0500)/'; // Adding the @ to avoid any 5.4 timezone errors.
+		@$data->ToDate = '/Date('.(date("U",$toDate)*1000).'-0500)/';
+		$data->StartRange = $start;
+		$data->EndRange = $end;
+
+		return $this->call('OrderStatusBulkLookup', $data);
 
 	}
 
@@ -386,17 +410,12 @@ class FifthGear {
 		
 		if($personalizations!=null&&$templateNumber!=null) {
 			$personalObj = (object)'Personalizations';
-			$personalObj->TemplateNumber = '62';
-			//$personalizations->Personalization = (object)'Personalization';
-			$personalObj->Personalization = array(
-				array( 'Number'=>1, 'Response'=>'1971'),
-				array( 'Number'=>2, 'Response'=>'VIN123'),
-				array( 'Number'=>3, 'Response'=>'1234-motor-date-code')
-			);
-			$item->Personalizations = $personalObj;
+			$personalObj->TemplateNumber = $templateNumber; // Assign the template number to Personalization->TemplateNumber
+			$personalObj->Personalization = $personaliaztions; // Assign personalization settings array personalization object
+			$item->Personalizations = $personalObj; // assign personaliaztion object to this item in the order
 		}
 
-		$this->order->data->Request->Items[count($this->order->data->Request->Items)]=$item;
+		$this->order->data->Request->Items[count($this->order->data->Request->Items)]=$item; // add item to Order Data
 
 	}
 
