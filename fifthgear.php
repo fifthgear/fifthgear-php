@@ -411,8 +411,8 @@ class FifthGear {
 		if($personalizations!=null&&$templateNumber!=null) {
 			$personalObj = (object)'Personalizations';
 			$personalObj->TemplateNumber = $templateNumber; // Assign the template number to Personalization->TemplateNumber
-			$personalObj->Personalization = $personaliaztions; // Assign personalization settings array personalization object
-			$item->Personalizations = $personalObj; // assign personaliaztion object to this item in the order
+			$personalObj->Personalization = $personalizations; // Assign personalization settings array personalization object
+			$item->Personalizations = $personalObj; // assign personalization object to this item in the order
 		}
 
 		$this->order->data->Request->Items[count($this->order->data->Request->Items)]=$item; // add item to Order Data
