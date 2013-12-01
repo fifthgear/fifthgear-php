@@ -146,8 +146,6 @@ class FifthGear {
 		// Convert to JSON string if not already
 		$data = (is_string($data)) ? $data : json_encode($data);
 
-		return $data;
-		die();
 		
 		$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
 		// Curl Options
