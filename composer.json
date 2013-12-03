@@ -1,0 +1,17 @@
+{
+    "name": "fifthgear/api",
+    "type": "library",
+    "description": "Enables PHP applications to communicate with  Fifth Gear's API.",
+    "keywords": ["api","fulfillment","rest","ecommerce","fifth gear"],
+    "homepage": "http://www.infifthgear.com",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fifth Gear",
+            "homepage": "http://www.infifthgear.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

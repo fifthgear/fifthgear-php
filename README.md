@@ -427,6 +427,27 @@ Track the status of an order, retrieve tracking information and more.
     $results = $fg->trackOrder($orderid);
     echo json_encode($results);
 
+## Bulk Order Lookup
+
+Lookup the details of multiple orders by date range.  
+
+**Attributes** $fg->lookupOrderStatusBulk('Start Date', 'End Date', 'Starting Index', 'Total Results')
+
+   - Start Date = beginning of the date range
+   - End Date = ending of the date range
+   - Starting Index = get orders starting from this index
+   - Total Results = total number of results to return (Max 500)
+
+
+    require_once('fifthgear.php');
+    
+    $fg = new FifthGear('companyid', 'username', 'password', 'dev');
+    $startDate = strtotime('-10 days');
+    $endDate = strtotime('today');
+
+    $results = $fg->lookupOrderStatusBulk($startDate, $endDate, 1, 4);
+    echo json_encode($results);
+
 
 ##Other Helpful Methods##
 
