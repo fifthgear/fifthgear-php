@@ -444,7 +444,7 @@ Lookup the details of multiple orders by date range.
     $fg = new FifthGear('companyid', 'username', 'password', 'dev');
     $startDate = strtotime('-10 days');
     $endDate = strtotime('today');
-
+    
     $results = $fg->lookupOrderStatusBulk($startDate, $endDate, 1, 4);
     echo json_encode($results);
 
