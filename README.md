@@ -2,14 +2,12 @@ Fifth Gear for PHP
 =======================
 Fifth Gear is an end-to-end ecommerce fulfillment provider. Learn more about [Fifth Gear & our order fulfillment services](http://infifthgear.com/ "fulfillment services"). 
 
-**FIFTHGEAR-PHP** is a php class for interacting with our fulfillment engine. Currently  supports: Order Placing, Order Tracking and Inventory lookup.
+**FIFTHGEAR-PHP** is a real working example class for interacting with our fulfillment engine. Currently  supports: Order Placing, Order Tracking and Inventory lookup and Bulk Inventory Lookup. **This code is provided as an example of how you can interact with Fifth Gear's FulFillment Services, please use at your own risk**
 
 **Requirements**
 
-- PHP 5.*
+- PHP 5.3.*
 - [PHP Curl](http://php.net/manual/en/curl.installation.php)
-
-
 
 
 ## Instantiating the Fifth Gear Object

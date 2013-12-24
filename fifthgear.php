@@ -1,11 +1,10 @@
 <?php 
 
 /**
-*  FifthGear Client for PHP
+*  FifthGear Example Class for PHP
 *
 * @package    FifthGear
-* @author     Brandon Corbin
-* @version    0.5.7
+* @version    0.5.8
 * ...
 */
 
