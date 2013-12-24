@@ -135,6 +135,25 @@ class FifthGear {
 		
 	}
 
+	public function validate() { 
+		$order = $this->order->data->Request;
+
+		$errors = array();
+
+		$errors[]="hi";
+
+
+
+
+		if(count($errors)>0) {
+			var_dump($errors);
+			die();
+		}
+
+
+
+	}
+
 	/**
 	* Primary Fifth Gear Service Call
 	*
@@ -145,9 +164,8 @@ class FifthGear {
 		$curl = curl_init();
 		// Convert to JSON string if not already
 		$data = (is_string($data)) ? $data : json_encode($data);
-
 		
-		$callURL = 'http://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
+		$callURL = 'https://'.$this->config['user'].':'.urlencode($this->config['password']).'@'.$this->config['host'].$this->config['basepath'].'/'.$service;
 		// Curl Options
 		curl_setopt($curl, CURLOPT_URL, $callURL);
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/json'));
