@@ -41,6 +41,22 @@ switch($testService) {
 
 	break;
 
+
+/***************************************
+Bulk Order Status Lookup   
+***************************************/
+
+	case "getBulkOrderLookup" :
+
+		$startDate = strtotime('-30 days');
+		$endDate = strtotime('today');
+
+		$results = $fg->lookupOrderStatusBulk($startDate, $endDate, 1, 4);
+		echo json_encode($results);
+
+	break;
+
+
 /***************************************
 	   ______     __     ______                    ____                                   ___             __  _           
 	  / ____/__  / /_   /  _/ /____  ____ ___     / __ \___  ______________  ____  ____ _/ (_)___  ____ _/ /_(_)___  ____ 
@@ -217,6 +233,8 @@ switch($testService) {
 			'placeorder'=>$fg->placeOrder(),
 			'orderData'=>$fg->getOrderData()
 		);
+
+		$fg->validate();
 
 		$results = $fg->placeOrder();
 		
