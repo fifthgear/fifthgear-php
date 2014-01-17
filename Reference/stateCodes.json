@@ -1,0 +1,314 @@
+{
+    "PR": {
+        "code": 0,
+        "name": "Puerto Rico"
+    },
+    "NULL": {
+        "code": 0,
+        "name": "Unknown"
+    },
+    "AS": {
+        "code": 1,
+        "name": "American Samoa"
+    },
+    "FM": {
+        "code": 2,
+        "name": "Federated States of Micronesia"
+    },
+    "GU": {
+        "code": 3,
+        "name": "Guam"
+    },
+    "MH": {
+        "code": 4,
+        "name": "Marshall Islands"
+    },
+    "MP": {
+        "code": 5,
+        "name": "Northern Mariana Islands"
+    },
+    "PW": {
+        "code": 6,
+        "name": "Palau"
+    },
+    "VI": {
+        "code": 7,
+        "name": "Virgin Islands"
+    },
+    "UM": {
+        "code": 8,
+        "name": "Minor Outlying Islands"
+    },
+    "AL": {
+        "code": 9,
+        "name": "Alabama"
+    },
+    "AK": {
+        "code": 10,
+        "name": "Alaska"
+    },
+    "AZ": {
+        "code": 11,
+        "name": "Arizona"
+    },
+    "AR": {
+        "code": 12,
+        "name": "Arkansas"
+    },
+    "CA": {
+        "code": 13,
+        "name": "California"
+    },
+    "CO": {
+        "code": 14,
+        "name": "Colorado"
+    },
+    "CT": {
+        "code": 15,
+        "name": "Connecticut"
+    },
+    "DE": {
+        "code": 16,
+        "name": "Delaware"
+    },
+    "DC": {
+        "code": 17,
+        "name": "Washington DC"
+    },
+    "FL": {
+        "code": 18,
+        "name": "Florida"
+    },
+    "GA": {
+        "code": 19,
+        "name": "Georgia"
+    },
+    "HI": {
+        "code": 20,
+        "name": "Hawaii"
+    },
+    "ID": {
+        "code": 21,
+        "name": "Idaho"
+    },
+    "IL": {
+        "code": 22,
+        "name": "Illinois"
+    },
+    "IN": {
+        "code": 23,
+        "name": "Indiana"
+    },
+    "IA": {
+        "code": 24,
+        "name": "Iowa"
+    },
+    "KS": {
+        "code": 25,
+        "name": "Kansas"
+    },
+    "KY": {
+        "code": 26,
+        "name": "Kentucky"
+    },
+    "LA": {
+        "code": 27,
+        "name": "Louisiana"
+    },
+    "ME": {
+        "code": 28,
+        "name": "Maine"
+    },
+    "MD": {
+        "code": 29,
+        "name": "Maryland"
+    },
+    "MA": {
+        "code": 30,
+        "name": "Massachusetts"
+    },
+    "MI": {
+        "code": 31,
+        "name": "Michigan"
+    },
+    "MN": {
+        "code": 32,
+        "name": "Minnesota"
+    },
+    "MS": {
+        "code": 33,
+        "name": "Mississippi"
+    },
+    "MO": {
+        "code": 34,
+        "name": "Missouri"
+    },
+    "MT": {
+        "code": 35,
+        "name": "Montana"
+    },
+    "NE": {
+        "code": 36,
+        "name": "Nebraska"
+    },
+    "NV": {
+        "code": 37,
+        "name": "Nevada"
+    },
+    "NH": {
+        "code": 38,
+        "name": "New Hampshire"
+    },
+    "NJ": {
+        "code": 39,
+        "name": "New Jersey"
+    },
+    "NM": {
+        "code": 40,
+        "name": "New Mexico"
+    },
+    "NY": {
+        "code": 41,
+        "name": "New York"
+    },
+    "NC": {
+        "code": 42,
+        "name": "North Carolina"
+    },
+    "ND": {
+        "code": 43,
+        "name": "North Dakota"
+    },
+    "OH": {
+        "code": 44,
+        "name": "Ohio"
+    },
+    "OK": {
+        "code": 45,
+        "name": "Oklahoma"
+    },
+    "OR": {
+        "code": 46,
+        "name": "Oregon"
+    },
+    "PA": {
+        "code": 47,
+        "name": "Pennsylvania"
+    },
+    "RI": {
+        "code": 48,
+        "name": "Rhode Island"
+    },
+    "SC": {
+        "code": 49,
+        "name": "South Carolina"
+    },
+    "SD": {
+        "code": 50,
+        "name": "South Dakota"
+    },
+    "TN": {
+        "code": 51,
+        "name": "Tennessee"
+    },
+    "TX": {
+        "code": 52,
+        "name": "Texas"
+    },
+    "UT": {
+        "code": 53,
+        "name": "Utah"
+    },
+    "VT": {
+        "code": 54,
+        "name": "Vermont"
+    },
+    "VA": {
+        "code": 55,
+        "name": "Virginia"
+    },
+    "WA": {
+        "code": 56,
+        "name": "Washington"
+    },
+    "WV": {
+        "code": 57,
+        "name": "West Virginia"
+    },
+    "WI": {
+        "code": 58,
+        "name": "Wisconsin"
+    },
+    "WY": {
+        "code": 59,
+        "name": "Wyoming"
+    },
+    "AE": {
+        "code": 60,
+        "name": "Armed Forces Europe"
+    },
+    "AA": {
+        "code": 61,
+        "name": "Armed Forces Africa"
+    },
+    "AP": {
+        "code": 62,
+        "name": "Armed Forces Pacific"
+    },
+    "AB": {
+        "code": 63,
+        "name": "Alberta"
+    },
+    "BC": {
+        "code": 64,
+        "name": "British Columbia"
+    },
+    "MB": {
+        "code": 65,
+        "name": "Manitoba"
+    },
+    "NB": {
+        "code": 66,
+        "name": "New Brunswick"
+    },
+    "NL": {
+        "code": 67,
+        "name": "Newfoundland and Labrador"
+    },
+    "NT": {
+        "code": 68,
+        "name": "Northwest Territories"
+    },
+    "NS": {
+        "code": 69,
+        "name": "Nova Scotia"
+    },
+    "ON": {
+        "code": 70,
+        "name": "Ontario"
+    },
+    "PE": {
+        "code": 71,
+        "name": "Prince Edward Island"
+    },
+    "QC": {
+        "code": 72,
+        "name": "Quebec"
+    },
+    "SK": {
+        "code": 73,
+        "name": "Saskatchewan"
+    },
+    "YT": {
+        "code": 74,
+        "name": "Yukon"
+    },
+    "NU": {
+        "code": 75,
+        "name": "Nunavut"
+    },
+    "Other": {
+        "code": 76,
+        "name": "Other"
+    }
+}
