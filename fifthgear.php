@@ -65,9 +65,9 @@ class FifthGear {
 		$this->config['password']=$password;
 
 		if($mode=='prod') {
-			$this->config['basepath']="/v2.0/CommerceServices.svc";
+			$this->config['basepath']="/v2.0/CommerceServices.svc/Rest";
 		} else{
-			$this->config['basepath']="/test/v2.0/CommerceServices.svc";
+			$this->config['basepath']="/test/v2.0/CommerceServices.svc/Rest";
 		}
 
 		// Create a blank order request Stub
