@@ -3,7 +3,7 @@
 require_once('fifthgear.php');
 
 // First with setup the Fifth Gear API
-$fg = new FifthGear('brv', 'brvwebstore', 'dechA8av', 'dev');
+$fg = new FifthGear('companyid', 'user', 'password', 'dev');
 
 ///
 // How to access the different testing methods
