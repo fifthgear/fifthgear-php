@@ -4,7 +4,7 @@
 *  FifthGear Example Class for PHP
 *
 * @package    FifthGear
-* @version    0.5.9
+* @version    0.5.10
 * ...
 */
 
@@ -486,12 +486,25 @@ class FifthGear {
 
 		$this->paymentType = "cash";
 
-		$this->order->data->Request->Payment->CashPayment 				= (object)array();
-		$this->order->data->Request->Payment->CashPayment->Amount 		= 0;
+		$this->order->data->Request->Payment->CashPayment = (object)array();
+		$this->order->data->Request->Payment->CashPayment->Amount = 0;
 		$this->order->data->Request->Payment->CashPayment->ChequeNumber	= $params['checkNumber'];
 		@$this->order->data->Request->Payment->CashPayment->ChequeDate	= '/Date('.(date("U",time())*1000).'-0500)/';
 
 
+	}
+
+	/**
+	* Place order with WireTransfer (can be renamed in fullfillment system - ex. 'Prepaid')
+	* This is used to place orders without needing a credit card.
+	*
+	* @return object FifthGearResponse
+	*/
+	public function addWireTransferPayment() {
+
+		$this->paymentType = "wiretransfer";
+		$this->order->data->Request->Payment->WireTransferPayment = (object)array();
+		$this->order->data->Request->Payment->WireTransferPayment->Amount = 0;
 	}
 
 
@@ -569,12 +582,14 @@ class FifthGear {
 			$this->order->data->Request->Payment->CreditCardPayments[0]->AddressZip 	= $this->paymentZipcode;
 			// Set authorization amount - not sure if this is needed anymore.
 			$this->order->data->Request->Payment->CreditCardPayments[0]->AuthorizationAmount = $total + $shippingCharge;
-				
-		} else {
+		} elseif ($this->paymentType=="cash") {
 			// If it's a cash payment
 			// Add shipping charges to total Amount
 			$this->order->data->Request->Payment->CashPayment->Amount = $total + $shippingCharge;
-
+		} elseif ($this->paymentType=="wiretransfer") {
+			// If it's a wiretransfer payment
+			// Add shipping charges to total Amount
+			$this->order->data->Request->Payment->WireTransferPayment->Amount = $total + $shippingCharge;
 		}
 
 		$this->order->data->Request->CountryCode = $this->order->data->Request->ShipTos[0]->ShippingAddress->CountryCode;
