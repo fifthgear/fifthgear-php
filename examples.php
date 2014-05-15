@@ -3,7 +3,7 @@
 require_once('fifthgear.php');
 
 // First with setup the Fifth Gear API
-$fg = new FifthGear('companyid', 'username', 'password', 'dev');
+$fg = new FifthGear('brv', 'brvwebstore', 'dechA8av', 'dev');
 
 ///
 // How to access the different testing methods
@@ -133,8 +133,8 @@ Bulk Order Status Lookup
 
 		// Test the different payment types Cash or Credit
 
-		//$type = "cash"; 
-		$type = "credit";
+		$type = "wiretransfer"; 
+		//$type = "credit";
 
 		// Add a customer to this order
 		$fg->addCustomer(array(
@@ -197,14 +197,13 @@ Bulk Order Status Lookup
 			)
 		));
 
-
-		$fg->order->data->Request->OrderMessage1 = "This is message 1";
-		$fg->order->data->Request->OrderMessage2 = "This is message 2";
-		$fg->order->data->Request->OrderMessage3 = "This is message 3";
-		$fg->order->data->Request->OrderMessage4 = "This is message 4";
-		$fg->order->data->Request->OrderMessage5 = "This is message 5";
-		$fg->order->data->Request->OrderMessage6 = "This is message 6";
-
+		// Adding Order Messages
+		// $fg->order->data->Request->OrderMessage1 = "This is message 1";
+		// $fg->order->data->Request->OrderMessage2 = "This is message 2";
+		// $fg->order->data->Request->OrderMessage3 = "This is message 3";
+		// $fg->order->data->Request->OrderMessage4 = "This is message 4";
+		// $fg->order->data->Request->OrderMessage5 = "This is message 5";
+		// $fg->order->data->Request->OrderMessage6 = "This is message 6";
 
 
 		/***************************************
@@ -227,18 +226,23 @@ Bulk Order Status Lookup
 			$fg->addCashPayment(array(
 				'checkNumber'=>1001
 			));
+		} elseif($type=="wiretransfer") {
+			$fg->addWireTransferPayment();
 		}
 		
-		$output = array(
+		$results = array(
 			'placeorder'=>$fg->placeOrder(),
 			'orderData'=>$fg->getOrderData()
 		);
 
-		$fg->validate();
 
-		$results = $fg->placeOrder();
+
+		//$fg->validate();
+
+		//$results = $fg->placeOrder();
 		
-		$results = $fg->getOrderData();
+		//$results = $fg->getOrderData();
+		header("Content-Type:application/json");
 		echo json_encode($results);
 
 	break; 
