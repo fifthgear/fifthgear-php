@@ -4,7 +4,7 @@
 *  FifthGear Example Class for PHP
 *
 * @package    FifthGear
-* @version    0.5.10
+* @version    0.5.11
 * ...
 */
 
@@ -67,7 +67,8 @@ class FifthGear {
 		if($mode=='prod') {
 			$this->config['basepath']="/v2.0/CommerceServices.svc/Rest";
 		} else{
-			$this->config['basepath']="/test/v2.0/CommerceServices.svc/Rest";
+			$this->config['basepath']="/v2.0/CommerceServices.svc/Rest";
+			$this->config['host'] = "https://commerceservicestest.infifthgear.com"; // New CommerceService API Endpoint
 		}
 
 		// Create a blank order request Stub
